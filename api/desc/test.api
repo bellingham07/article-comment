@@ -1,0 +1,24 @@
+syntax = "v2"
+
+info(
+    title: "type title here"
+    desc: "type desc here"
+    author: "type author here"
+    email: "type email here"
+    version: "type version here"
+)
+
+type (
+    t{
+        A string   `json:"a"`
+    }
+)
+
+@server(
+    group : test
+    prefix :userapi/v1
+)
+service article {
+    @handler GetBook
+    post /get_book (t) returns (t)
+}
