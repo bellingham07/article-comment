@@ -19,6 +19,6 @@ func NewServiceContext(c config.Config) *ServiceContext {
 }
 
 func InitMongo(c config.Config) (mongo *mon.Model) {
-	mongo = mon.MustNewModel("mongodb://root:caojinbo@42.194.238.75:14001", "db", "collection")
+	mongo = mon.MustNewModel("", "db", "collection")
 	return
 }
