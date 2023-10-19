@@ -24,13 +24,28 @@ type (
     }
 
     SaveCommentReq {
-        Com Comment `json:"com"`
+        ArticleId string `json:"article_id"`
+        Content string `json:"content"`
+        UserId string `json:"user_id"`
+        Nickname string `json:"nickname"`
+        LikeNum int64 `json:"like_num"`
+        ReplyNum int64 `json:"reply_num"`
+        State string `json:"state"`
+        ParentId string `json:"parent_id"`
     }
     SaveCommentResp {
         Message string `json:"message"`
     }
     UpdateCommentReq {
-        Com Comment `json:"com"`
+        Id string `json:"id"`
+        ArticleId string `json:"article_id,optional"`
+        Content string `json:"content,optional"`
+        UserId string `json:"user_id,optional"`
+        Nickname string `json:"nickname,optional"`
+        LikeNum int64 `json:"like_num,optional"`
+        ReplyNum int64 `json:"reply_num,optional"`
+        State string `json:"state,optional"`
+        ParentId string `json:"parent_id,optional"`
     }
     UpdateCommentResp {
         Message string `json:"message"`
@@ -47,10 +62,10 @@ type (
     FindAllCommentResp {
         List []*Comment `json:"list"`
     }
-    FindCommentByIdReq{
+    FindCommentByIdReq {
         Id string `form:"id"`
     }
-    FindCommentByIdResp{
+    FindCommentByIdResp {
         List []*Comment `json:"list"`
     }
 )
@@ -79,5 +94,5 @@ service article {
 
     // 根据id查评论
     @handler FindCommentById
-    get /comment/id (FindCommentByIdReq) returns(FindCommentByIdResp)
+    get /comment/id (FindCommentByIdReq) returns (FindCommentByIdResp)
 }

@@ -5,6 +5,7 @@ import (
 	"article-comment/api/model"
 	"context"
 	"fmt"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"time"
 
 	"article-comment/api/internal/svc"
@@ -29,19 +30,20 @@ func NewSaveCommentLogic(ctx context.Context, svcCtx *svc.ServiceContext) *SaveC
 
 func (l *SaveCommentLogic) SaveComment(req *types.SaveCommentReq) (resp *types.SaveCommentResp, err error) {
 	com := &model.Comment{
-		ArticleId: req.Com.ArticleId,
-		Content:   req.Com.Content,
-		UserId:    req.Com.UserId,
-		Nickname:  req.Com.Nickname,
-		LikeNum:   req.Com.LikeNum,
-		ReplyNum:  req.Com.ReplyNum,
-		State:     req.Com.State,
-		ParentId:  req.Com.ParentId,
-		UpdateAt:  time.Now(),
+		ArticleId: req.ArticleId,
+		Content:   req.Content,
+		UserId:    req.UserId,
+		Nickname:  req.Nickname,
+		LikeNum:   req.LikeNum,
+		ReplyNum:  req.ReplyNum,
+		State:     req.State,
+		ParentId:  req.ParentId,
 		CreateAt:  time.Now(),
 	}
 	one, err := l.svcCtx.Comment.InsertOne(l.ctx, &com)
-	fmt.Println(one)
+
+	// 使用类型断言，调用Hex()函数，提取id关键字
+	fmt.Println(one.InsertedID.(primitive.ObjectID).Hex())
 	if err != nil {
 		return nil, errorx.Internal(err, "fail to insert").WithMetadata(errorx.Metadata{"req": req})
 	}

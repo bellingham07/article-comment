@@ -5,6 +5,8 @@ import (
 	"article-comment/api/model"
 	"context"
 	"fmt"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"time"
 
 	"article-comment/api/internal/svc"
@@ -28,14 +30,18 @@ func NewUpdateCommentLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Upd
 }
 
 func (l *UpdateCommentLogic) UpdateComment(req *types.UpdateCommentReq) (resp *types.UpdateCommentResp, err error) {
-	newCom := &model.Comment{
-		Content:  "caojinbo is mvp",
-		Nickname: "caoshuaishuai",
-		UpdateAt: time.Now(),
+	update := bson.M{
+		"$set": &model.Comment{
+			Content:  "caojinbo is mvp",
+			Nickname: "caoshuaishuai",
+			UpdateAt: time.Now(),
+		},
 	}
-	id, err := l.svcCtx.Comment.UpdateByID(l.ctx, req.Com.ID, newCom)
+	oid, err := primitive.ObjectIDFromHex(req.Id)
+	id, err := l.svcCtx.Comment.UpdateByID(l.ctx, oid, update)
 	fmt.Println(id)
 	if err != nil {
+		fmt.Println(err)
 		return nil, errorx.Internal(err, "fail  to update").WithMetadata(errorx.Metadata{"req": req})
 	}
 	resp = new(types.UpdateCommentResp)

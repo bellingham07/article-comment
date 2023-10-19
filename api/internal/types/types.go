@@ -16,7 +16,14 @@ type Comment struct {
 }
 
 type SaveCommentReq struct {
-	Com Comment `json:"com"`
+	ArticleId string `json:"article_id"`
+	Content   string `json:"content"`
+	UserId    string `json:"user_id"`
+	Nickname  string `json:"nickname"`
+	LikeNum   int64  `json:"like_num"`
+	ReplyNum  int64  `json:"reply_num"`
+	State     string `json:"state"`
+	ParentId  string `json:"parent_id"`
 }
 
 type SaveCommentResp struct {
@@ -24,7 +31,15 @@ type SaveCommentResp struct {
 }
 
 type UpdateCommentReq struct {
-	Com Comment `json:"com"`
+	Id        string `json:"id"`
+	ArticleId string `json:"article_id,optional"`
+	Content   string `json:"content,optional"`
+	UserId    string `json:"user_id,optional"`
+	Nickname  string `json:"nickname,optional"`
+	LikeNum   int64  `json:"like_num,optional"`
+	ReplyNum  int64  `json:"reply_num,optional"`
+	State     string `json:"state,optional"`
+	ParentId  string `json:"parent_id,optional"`
 }
 
 type UpdateCommentResp struct {

@@ -5,6 +5,7 @@ import (
 	"context"
 	"fmt"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 
 	"article-comment/api/internal/svc"
 	"article-comment/api/internal/types"
@@ -27,7 +28,8 @@ func NewDeleteCommentLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Del
 }
 
 func (l *DeleteCommentLogic) DeleteComment(req *types.DeleteCommentReq) (resp *types.DeleteCommentResp, err error) {
-	one, err := l.svcCtx.Comment.DeleteOne(l.ctx, bson.M{"_id": req.Id})
+	oid, err := primitive.ObjectIDFromHex(req.Id)
+	one, err := l.svcCtx.Comment.DeleteOne(l.ctx, bson.M{"_id": oid})
 	fmt.Println(one)
 	if err != nil {
 		return nil, errorx.Internal(err, "delete fail").WithMetadata(errorx.Metadata{"req": req})

@@ -2,8 +2,10 @@ package comment
 
 import (
 	"article-comment/api/internal/common/errorx"
+	"article-comment/api/model"
 	"context"
 	"go.mongodb.org/mongo-driver/bson"
+	"strconv"
 
 	"article-comment/api/internal/svc"
 	"article-comment/api/internal/types"
@@ -27,12 +29,29 @@ func NewFindAllCommentLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Fi
 
 func (l *FindAllCommentLogic) FindAllComment(req *types.FindAllCommentReq) (resp *types.FindAllCommentResp, err error) {
 	var (
-		list []*types.Comment
+		coms []*model.Comment
 	)
-	err = l.svcCtx.Comment.Find(l.ctx, &list, bson.M{})
+	err = l.svcCtx.Comment.Find(l.ctx, &coms, bson.M{})
 	if err != nil {
 		return nil, errorx.Internal(err, "查看全部评论失败").WithMetadata(errorx.Metadata{"req": req})
 	}
+	resp = new(types.FindAllCommentResp)
 	resp.List = make([]*types.Comment, 0)
+	for _, com := range coms {
+		tmp := &types.Comment{
+			ID:        com.ID,
+			ArticleId: com.ArticleId,
+			Content:   com.Content,
+			UserId:    com.UserId,
+			Nickname:  com.Nickname,
+			LikeNum:   com.LikeNum,
+			ReplyNum:  com.ReplyNum,
+			State:     com.State,
+			ParentId:  com.ParentId,
+			UpdateAt:  strconv.FormatInt(com.UpdateAt.Unix(), 10),
+			CreateAt:  strconv.FormatInt(com.CreateAt.Unix(), 10),
+		}
+		resp.List = append(resp.List, tmp)
+	}
 	return
 }
