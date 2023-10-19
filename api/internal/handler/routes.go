@@ -15,8 +15,8 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodPost,
-				Path:    "/get_book",
-				Handler: test.GetBookHandler(serverCtx),
+				Path:    "/FindOne",
+				Handler: test.FindOneHandler(serverCtx),
 			},
 		},
 		rest.WithPrefix("/userapi/v1"),

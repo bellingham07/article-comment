@@ -19,6 +19,6 @@ type (
     prefix :userapi/v1
 )
 service article {
-    @handler GetBook
-    post /get_book (t) returns (t)
+    @handler FindOne
+    post /FindOne (t) returns (t)
 }

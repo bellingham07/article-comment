@@ -9,7 +9,7 @@ import (
 	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
-func GetBookHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func FindOneHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.T
 		if err := httpx.Parse(r, &req); err != nil {
@@ -17,8 +17,8 @@ func GetBookHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			return
 		}
 
-		l := test.NewGetBookLogic(r.Context(), svcCtx)
-		resp, err := l.GetBook(&req)
+		l := test.NewFindOneLogic(r.Context(), svcCtx)
+		resp, err := l.FindOne(&req)
 		if err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 		} else {
