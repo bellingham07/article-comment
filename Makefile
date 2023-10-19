@@ -9,7 +9,7 @@ docker-build:
 	docker build -t hibug-track:1.0 -f Dockerfile .
 
 gen-api:
-	goctl api go -api ./api/desc/all.api -dir ./api --home="./template"
+	goctl api go -api ./api/desc/all.api -dir ./api --style=go_zero --home="./template"
 
 #goctl 生成表结构对于的gorm代码
 gen-model:

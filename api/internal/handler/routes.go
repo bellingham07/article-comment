@@ -4,7 +4,7 @@ package handler
 import (
 	"net/http"
 
-	test "article-comment/api/internal/handler/test"
+	comment "article-comment/api/internal/handler/comment"
 	"article-comment/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
@@ -15,10 +15,30 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodPost,
-				Path:    "/FindOne",
-				Handler: test.FindOneHandler(serverCtx),
+				Path:    "/comment/save",
+				Handler: comment.SaveCommentHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPut,
+				Path:    "/comment/update",
+				Handler: comment.UpdateCommentHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodDelete,
+				Path:    "/comment/del",
+				Handler: comment.DeleteCommentHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/comment/list",
+				Handler: comment.FindAllCommentHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/comment/id",
+				Handler: comment.FindCommentByIdHandler(serverCtx),
 			},
 		},
-		rest.WithPrefix("/userapi/v1"),
+		rest.WithPrefix("/api/v1"),
 	)
 }

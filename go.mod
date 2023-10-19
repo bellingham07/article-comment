@@ -2,12 +2,23 @@ module article-comment
 
 go 1.20
 
-require github.com/zeromicro/go-zero v1.5.6
+require (
+	github.com/avast/retry-go/v4 v4.5.0
+	github.com/bytedance/sonic v1.10.2
+	github.com/zeromicro/go-zero v1.5.6
+	go.uber.org/zap v1.24.0
+)
 
 require (
+	github.com/chenzhuoyu/base64x v0.0.0-20230717121745-296ad89f973d // indirect
+	github.com/chenzhuoyu/iasm v0.9.0 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
-	github.com/globalsign/mgo v0.0.0-20181015135952-eeefdecb41b8 // indirect
 	github.com/go-redis/redis/v8 v8.11.5 // indirect
+	github.com/klauspost/cpuid/v2 v2.0.9 // indirect
+	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
+	go.uber.org/atomic v1.10.0 // indirect
+	go.uber.org/multierr v1.9.0 // indirect
+	golang.org/x/arch v0.0.0-20210923205945-b76863e36670 // indirect
 )
 
 require (

@@ -9,16 +9,75 @@ info(
 )
 
 type (
-    t{
-        A string   `json:"a"`
+    Comment {
+        ID string `json:"id"`
+        ArticleId string `json:"article_id"`
+        Content string `json:"content"`
+        UserId string `json:"user_id"`
+        Nickname string `json:"nickname"`
+        LikeNum int64 `json:"like_num"`
+        ReplyNum int64 `json:"reply_num"`
+        State string `json:"state"`
+        ParentId string `json:"parent_id"`
+        UpdateAt string `json:"update_at"`
+        CreateAt string `json:"create_at"`
+    }
+
+    SaveCommentReq {
+        Com Comment `json:"com"`
+    }
+    SaveCommentResp {
+        Message string `json:"message"`
+    }
+    UpdateCommentReq {
+        Com Comment `json:"com"`
+    }
+    UpdateCommentResp {
+        Message string `json:"message"`
+    }
+    DeleteCommentReq {
+        Id string `json:"id"`
+    }
+    DeleteCommentResp {
+        Message string `json:"message"`
+    }
+    FindAllCommentReq {
+        Id string `json:"id"`
+    }
+    FindAllCommentResp {
+        List []*Comment `json:"list"`
+    }
+    FindCommentByIdReq{
+        Id string `form:"id"`
+    }
+    FindCommentByIdResp{
+        List []*Comment `json:"list"`
     }
 )
 
 @server(
-    group : test
-    prefix :userapi/v1
+    group : comment
+    prefix :api/v1
 )
+
 service article {
-    @handler FindOne
-    post /FindOne (t) returns (t)
+    // 保存评论
+    @handler SaveComment
+    post /comment/save (SaveCommentReq) returns (SaveCommentResp)
+
+    // 更新评论
+    @handler UpdateComment
+    put /comment/update (UpdateCommentReq) returns (UpdateCommentResp)
+
+    // 删除评论
+    @handler DeleteComment
+    delete /comment/del (DeleteCommentReq) returns (DeleteCommentResp)
+
+    // 查看所有评论
+    @handler FindAllComment
+    get /comment/list (FindAllCommentReq) returns (FindAllCommentResp)
+
+    // 根据id查评论
+    @handler FindCommentById
+    get /comment/id (FindCommentByIdReq) returns(FindCommentByIdResp)
 }
